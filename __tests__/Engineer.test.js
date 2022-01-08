@@ -12,10 +12,10 @@ describe('Engineer', () => {
         });
     });
     describe('getGithub', () => {
-        it('should return GitHub username', () => {
+        it('should return GitHub username', () => {            
             const engineer = new Engineer('Mike', '42', 'mike@mikemail.com', 'mike42');
 
-            expect(engineer.getGithub).toEqual('mike42');
+            expect(engineer.getGithub()).toEqual('mike42');
         });
     });
     describe('getRole', () => {
