@@ -6,7 +6,65 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
-const userQuestions = [
+const team = [];
+
+const managerQuestions = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the team manager?',
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please enter a name for the manager.');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: "What is the manager's ID number?",
+        validate: idInput => {
+            if (idInput) {
+                return true;
+            } else {
+                console.log("Please enter the manager's ID number.");
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "What is the manager's email address?",
+        validate: emailInput => {
+            if (emailInput) {
+                return true;
+            } else {
+                console.log('Please enter an email address.');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'officeNumber',
+        message: "What is the manager's office number?",
+        validate: officeInput => {
+            if (officeInput) {
+                return true;
+            } else {
+                console.log("Please enter the manager's office number.");
+                return false;
+            }
+        }
+    },
+];
+
+
+const employeeQuestions = [
     {
         type: 'input',
         name: 'name',
@@ -19,6 +77,11 @@ const userQuestions = [
                 return false;
             }
         }
+    },
+    {
+        type: 'list',
+        name: 'role',
+        choices: ['Engineer', 'Intern']
     },
     {
         type: 'input',
@@ -42,25 +105,6 @@ const userQuestions = [
                 return true;
             } else {
                 console.log('Please enter an email address.');
-                return false;
-            }
-        }
-    },
-    {
-        type: 'list',
-        name: 'role',
-        choices: ['Engineer', 'Intern', 'Manager']
-    },
-    {
-        type: 'input',
-        name: 'officeNumber',
-        message: "What is the manager's office number?",
-        when: (input) => input.role === 'Manager',
-        validate: officeInput => {
-            if (officeInput) {
-                return true;
-            } else {
-                console.log('Please enter an office number.');
                 return false;
             }
         }
@@ -95,8 +139,35 @@ const userQuestions = [
     }
 ];
 
-const promptUser = () => {
-    inquirer.prompt(userQuestions);
+
+const addManager = () => {
+    return inquirer.prompt(managerQuestions)
+        .then(managerInfo => {
+            const { name, id, email, officeNumber } = managerInfo;
+            const manager = new Manager(name, id, email, officeNumber);
+            team.push(manager);
+            console.log(team);
+        })
 };
 
-promptUser();
+const addEmployee = () => {
+    return inquirer.prompt(employeeQuestions)
+        .then(employeeInfo => {
+            let { name, id, role, email, github } = employeeInfo;
+            if (role === "Engineer") {
+                let employee = new Engineer(name, id, email, github);
+                team.push(employee);
+                console.log(team);
+            }
+        })
+}
+
+addManager()
+    .then(addEmployee);
+
+
+
+
+
+
+
