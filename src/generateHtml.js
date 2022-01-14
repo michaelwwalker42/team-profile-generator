@@ -1,4 +1,4 @@
-const managerCard = function (employee) {
+function generateManagerCard(employee) {
     return `
     <!-- manager card -->
     <div class="card shadow m-2" style="width: 18rem;">
@@ -8,14 +8,14 @@ const managerCard = function (employee) {
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID: ${employee.id}</li>
-            <li class="list-group-item">Email: <a href="#"
+            <li class="list-group-item">Email: <a href="mailto: ${employee.email}"
                     class="text-decoration-none">${employee.email}</a></li>
             <li class="list-group-item">Office number: ${employee.officeNumber}</li>
         </ul>
     </div>`
 };
 
-const engineerCard = function (employee) {
+function generateEngineerCard(employee) {
     return `
     <!-- engineer card -->
     <div class="card shadow m-2" style="width: 18rem;">
@@ -24,15 +24,15 @@ const engineerCard = function (employee) {
             <p class="card-text"><i class="fas fa-solid fa-glasses p-1"></i>Engineer</p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"${employee.id}</li>
-            <li class="list-group-item">Email: <a href="#"
-                    class="text-decoration-none"${employee.email}</a></li>
-            <li class="list-group-item">GitHub: <a href="#" class="text-decoration-none">${employee.github}</a></li>
+            <li class="list-group-item">ID: ${employee.id}</li>
+            <li class="list-group-item">Email: <a href="mailto: ${employee.email}"
+                    class="text-decoration-none">${employee.email}</a></li>
+            <li class="list-group-item">GitHub: <a href="https://github.com/${employee.github}" class="text-decoration-none">${employee.github}</a></li>
         </ul>
     </div>`
 };
 
-const internCard = function (employee) {
+function generateInternCard(employee) {
     return `
     <!-- intern card -->
     <div class="card shadow m-2" style="width: 18rem;">
@@ -42,7 +42,7 @@ const internCard = function (employee) {
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID: ${employee.id}</li>
-            <li class="list-group-item">Email: <a href="#"
+            <li class="list-group-item">Email: <a href="mailto: ${employee.email}"
                     class="text-decoration-none">${employee.email}</a></li>
             <li class="list-group-item">School: ${employee.school}</li>
         </ul>
@@ -50,6 +50,27 @@ const internCard = function (employee) {
 };
 
 function generateHtml(data) {
+
+    const cards = [];
+
+    data.forEach(employee => {
+
+        const role = employee.getRole();
+
+        if (role === 'Manager') {
+            const managerCard = generateManagerCard(employee);
+            cards.push(managerCard);
+        }
+        if (role === 'Engineer') {
+            const engineerCard = generateEngineerCard(employee);
+            cards.push(engineerCard);
+        }
+        if (role === 'Intern') {
+            const internCard = generateInternCard(employee);
+            cards.push(internCard);
+        }
+    });
+
     return `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
@@ -68,7 +89,7 @@ function generateHtml(data) {
         <div class="row">
             <div class="d-flex flex-wrap justify-content-center align-items-center">
 
-            ${employeeCards}
+            ${cards}
 
             </div>
         </div>
