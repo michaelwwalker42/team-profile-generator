@@ -180,7 +180,7 @@ const addEmployees = () => {
 
 
             if (addMember) {
-                addEmployees();
+                return addEmployees(team);
             } else {
                 return team;
             }
@@ -198,7 +198,11 @@ const writeFile = fileContent => {
     })
 };
 
-
+console.log(`
+======================
+Team Profile Generator
+======================
+`);
 
 addManager()
     .then(addEmployees)
