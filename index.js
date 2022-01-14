@@ -136,34 +136,59 @@ const employeeQuestions = [
                 return false;
             }
         }
+    },
+    {
+        type: 'confirm',
+        name: 'addMember',
+        message: 'Would you like to add another member to the team?',
+        default: false
     }
 ];
 
 
 const addManager = () => {
+    console.log(`
+    =============
+    Add a Manager
+    =============
+    `);
     return inquirer.prompt(managerQuestions)
         .then(managerInfo => {
             const { name, id, email, officeNumber } = managerInfo;
             const manager = new Manager(name, id, email, officeNumber);
             team.push(manager);
-            console.log(team);
         })
 };
 
 const addEmployee = () => {
+    console.log(`
+    =====================
+    Add a New Team Member
+    =====================
+    `);
     return inquirer.prompt(employeeQuestions)
         .then(employeeInfo => {
-            let { name, id, role, email, github } = employeeInfo;
+            let { name, id, role, email, github, school, addMember } = employeeInfo;
             if (role === "Engineer") {
                 let employee = new Engineer(name, id, email, github);
                 team.push(employee);
-                console.log(team);
+            } else if (role === 'Intern') {
+                let employee = new Intern(name, id, email, school);
+                team.push(employee);
             }
-        })
+            console.log(team);
+
+            if (addMember) {
+                addEmployee();
+            } else {
+                return team;
+            }
+        });
 }
 
 addManager()
     .then(addEmployee);
+
 
 
 
