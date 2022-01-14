@@ -82,7 +82,7 @@ function generateHtml(data) {
 </head>
 <body>
     <div class="col-12 text-center text-white py-1 bg-danger">
-        <h1>Team Name</h1>
+        <h1>My Team</h1>
     </div>
 
     <div class="container">
