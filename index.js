@@ -1,10 +1,11 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+
+const generateHtml = require('./src/generateHtml');
 
 const team = [];
 
@@ -160,7 +161,7 @@ const addManager = () => {
         })
 };
 
-const addEmployee = () => {
+const addEmployees = () => {
     console.log(`
     =====================
     Add a New Team Member
@@ -176,18 +177,44 @@ const addEmployee = () => {
                 let employee = new Intern(name, id, email, school);
                 team.push(employee);
             }
-            console.log(team);
+
 
             if (addMember) {
-                addEmployee();
+                addEmployees();
             } else {
                 return team;
             }
         });
 }
 
+const writeFile = fileContent => {
+    fs.writeFile('./dist/index.html', fileContent, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log('Team profile page created');
+        }
+    })
+};
+
+
+
 addManager()
-    .then(addEmployee);
+    .then(addEmployees)
+    .then(team => {
+        return generateHtml(team);
+    })
+    .then(fileContent => {
+        return writeFile(fileContent);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+
+
+
 
 
 
