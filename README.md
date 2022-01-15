@@ -17,7 +17,7 @@
   Make sure you're in the root of the directory, and type `npm install`, or `npm i` in the terminal. 
 
   ## Usage  
-Type `node index.js` or `node index` in the terminal. Answer the prompts, then check the /dist folder for the index.html file.    
+  Type `node index.js` or `node index` in the terminal. Answer the prompts, then check the /dist folder for the index.html file.    
     [Click here for video demo.](https://watch.screencastify.com/v/P1kjMCSU3WX8mj8enLSS)  
 
    ![demo-screenshot](assets/images/generator-screenshot.png)
@@ -26,7 +26,9 @@ Type `node index.js` or `node index` in the terminal. Answer the prompts, then c
   If you wish to contribute to the project, please add my GitHub repo as a source.
 
   ## Tests
-  Type `npm run test` in the terminal. ![test-demo](assets/images/test-demo.png)
+  Type `npm run test` in the terminal. 
+   
+   ![test-demo](assets/images/test-demo.png)
 
   ## License
 
