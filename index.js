@@ -15,7 +15,7 @@ const managerQuestions = [
         name: 'name',
         message: 'What is the name of the team manager?',
         validate: nameInput => {
-            if (nameInput) {
+            if (nameInput !== '') {
                 return true;
             } else {
                 console.log('Please enter a name for the manager.');
@@ -28,11 +28,11 @@ const managerQuestions = [
         name: 'id',
         message: "What is the manager's ID number?",
         validate: idInput => {
-            if (idInput) {
-                return true;
-            } else {
-                console.log("Please enter the manager's ID number.");
+            if (isNaN(idInput) || idInput === '') {
+                console.log("    Please enter a number for the managager's ID.");
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -41,7 +41,7 @@ const managerQuestions = [
         name: 'email',
         message: "What is the manager's email address?",
         validate: emailInput => {
-            if (emailInput) {
+            if (emailInput !== '') {
                 return true;
             } else {
                 console.log('Please enter an email address.');
@@ -54,11 +54,11 @@ const managerQuestions = [
         name: 'officeNumber',
         message: "What is the manager's office number?",
         validate: officeInput => {
-            if (officeInput) {
-                return true;
-            } else {
-                console.log("Please enter the manager's office number.");
+            if (isNaN(officeInput) || officeInput === '') {
+                console.log("    Please enter a number for the managager's ID.");
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -71,7 +71,7 @@ const employeeQuestions = [
         name: 'name',
         message: 'What is the name of the team member?',
         validate: nameInput => {
-            if (nameInput) {
+            if (nameInput !== '') {
                 return true;
             } else {
                 console.log('Please enter a name.');
@@ -89,11 +89,11 @@ const employeeQuestions = [
         name: 'id',
         message: 'What is their id number?',
         validate: idInput => {
-            if (idInput) {
-                return true;
-            } else {
-                console.log('Please enter and ID number.');
+            if (isNaN(idInput) || idInput === '') {
+                console.log("    Please enter a number for the employee's ID.");
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -102,7 +102,7 @@ const employeeQuestions = [
         name: 'email',
         message: 'What is their email address?',
         validate: emailInput => {
-            if (emailInput) {
+            if (emailInput !== '') {
                 return true;
             } else {
                 console.log('Please enter an email address.');
@@ -116,7 +116,7 @@ const employeeQuestions = [
         message: "What is the engineer's GitHub username?",
         when: (input) => input.role === 'Engineer',
         validate: githubInput => {
-            if (githubInput) {
+            if (githubInput !== '') {
                 return true;
             } else {
                 console.log('Please enter a GitHub username.');
@@ -130,7 +130,7 @@ const employeeQuestions = [
         message: "What is the intern's school?",
         when: (input) => input.role === 'Intern',
         validate: schoolInput => {
-            if (schoolInput) {
+            if (schoolInput !== '') {
                 return true;
             } else {
                 console.log('Please enter a school.');
@@ -193,7 +193,14 @@ const writeFile = fileContent => {
             console.log(err);
             return;
         } else {
-            console.log('Team profile page created');
+            console.log(`
+========================================================
+
+Team profile created as index.html in the ./dist folder.
+
+========================================================
+`);
+
         }
     })
 };
