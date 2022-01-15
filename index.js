@@ -1,14 +1,18 @@
+// import modules
 const inquirer = require('inquirer');
 const fs = require('fs');
-
+const validator = require('email-validator');
+// class modules
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-
+// module to create the html
 const generateHtml = require('./src/generateHtml');
 
+// create array to contain team members
 const team = [];
 
+// array for manager questons
 const managerQuestions = [
     {
         type: 'input',
@@ -41,11 +45,11 @@ const managerQuestions = [
         name: 'email',
         message: "What is the manager's email address?",
         validate: emailInput => {
-            if (emailInput !== '') {
-                return true;
-            } else {
-                console.log('Please enter an email address.');
+            if (!validator.validate(emailInput)) {
+                console.log('    Please enter a valid email address.');
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -64,7 +68,7 @@ const managerQuestions = [
     },
 ];
 
-
+// array for employee questions
 const employeeQuestions = [
     {
         type: 'input',
@@ -102,11 +106,11 @@ const employeeQuestions = [
         name: 'email',
         message: 'What is their email address?',
         validate: emailInput => {
-            if (emailInput !== '') {
-                return true;
-            } else {
-                console.log('Please enter an email address.');
+            if (!validator.validate(emailInput)) {
+                console.log('    Please enter a valid email address.');
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -155,8 +159,11 @@ const addManager = () => {
     `);
     return inquirer.prompt(managerQuestions)
         .then(managerInfo => {
+            // destructure manager info
             const { name, id, email, officeNumber } = managerInfo;
+            // create new manager using Manager class
             const manager = new Manager(name, id, email, officeNumber);
+            // add manager to team array
             team.push(manager);
         })
 };
@@ -169,16 +176,21 @@ const addEmployees = () => {
     `);
     return inquirer.prompt(employeeQuestions)
         .then(employeeInfo => {
+            // destructure employee info
             let { name, id, role, email, github, school, addMember } = employeeInfo;
+            // conditionals to check for employee roles
             if (role === "Engineer") {
+                // create engineer using Engineer class
                 let employee = new Engineer(name, id, email, github);
+                // add engineer to team array
                 team.push(employee);
             } else if (role === 'Intern') {
+                // create intern using Intern class
                 let employee = new Intern(name, id, email, school);
+                // add intern to team array
                 team.push(employee);
             }
-
-
+            // conditional to check to add member to team
             if (addMember) {
                 return addEmployees(team);
             } else {
@@ -186,7 +198,7 @@ const addEmployees = () => {
             }
         });
 }
-
+// create the html file
 const writeFile = fileContent => {
     fs.writeFile('./dist/index.html', fileContent, err => {
         if (err) {
@@ -222,15 +234,3 @@ addManager()
     .catch(err => {
         console.log(err);
     });
-
-
-
-
-
-
-
-
-
-
-
-
